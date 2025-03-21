@@ -58,6 +58,16 @@ public class GuestbookController {
         model.addAttribute("dto", dto);
     }
 
+    @PostMapping("/remove")
+    public String remove(long gno, RedirectAttributes redirectAttributes) {
+        log.info("gno: " + gno);
+
+        service.remove(gno);
+        redirectAttributes.addFlashAttribute("msg", gno);
+
+        return "redirect:/guestbook/list";
+    }
+
     @PostMapping("/modify")
     public String modify(GuestbookDTO dto, @ModelAttribute("requestDTO") PageRequestDTO requestDTO, RedirectAttributes redirectAttributes) {
         log.info("post modify.....................");
