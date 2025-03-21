@@ -7,6 +7,8 @@
 
         <form action="/guestbook/modify" method="post">
             <input type="hidden" name="page" th:value="${requestDTO.page}">
+            <input type="hidden" name="type" th:value="${requestDTO.type}">
+            <input type="hidden" name="keyword" th:value="${requestDTO.keyword}">
 
             <div class="form-group">
                 <label>Gno</label>
@@ -42,7 +44,7 @@
         </form>
 
         <button type="button" class="btn btn-primary modifyBtn">Modify</button>
-        <button type="button" class="btn btn-info">List</button>
+        <button type="button" class="btn btn-info listBtn">List</button>
         <button type="button" class="btn btn-danger removeBtn">Remove</button>
 
         <script th:inline="javascript">
@@ -50,8 +52,8 @@
 
             $(".removeBtn").click(function() {
                 actionForm
-                .attr("action", "/guestbook/remove")
-                .attr("method", "post");
+                    .attr("action", "/guestbook/remove")
+                    .attr("method", "post");
                 actionForm.submit();
             });
 
@@ -61,9 +63,26 @@
                 }
 
                 actionForm
-                .attr("action", "/guestbook/modify")
-                .attr("method", "post")
-                .submit();
+                    .attr("action", "/guestbook/modify")
+                    .attr("method", "post")
+                    .submit();
+            });
+
+            $(".listBtn").click(function() {
+                var page = $("input[name='page']");
+                var type = $("input[name='type']");
+                var keyword = $("input[name='keyword']");
+
+                actionForm.empty();
+                actionForm.append(page);
+                actionForm.append(type);
+                actionForm.append(keyword);
+
+                actionForm
+                    .attr("action", "/guestbook/list")
+                    .attr("method", "get");
+                console.log(actionForm.html());
+                actionForm.submit();
             });
         </script>
     </th:block>
